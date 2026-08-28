@@ -81,17 +81,21 @@ const createJob = async (req, res) => {
 
 const getAllJobs = async (req, res) => {
   try {
-    const [jobs] = await pool.query(
-      `SELECT
+    const { skill, location } = req.query;
+
+    let query = `
+      SELECT
         j.id,
+        j.employer_id,
         j.title,
         j.company,
         j.description,
+        j.required_skills,
         j.location,
         j.employment_type,
         j.salary_min,
         j.salary_max,
-        j.required_skills,
+        j.experience_required,
         j.status,
         j.created_at,
         u.name AS employer_name
@@ -99,12 +103,31 @@ const getAllJobs = async (req, res) => {
       INNER JOIN users u
         ON j.employer_id = u.id
       WHERE j.status = 'OPEN'
-      ORDER BY j.created_at DESC`
-    );
+    `;
+
+    const values = [];
+
+    if (skill) {
+      query += ` AND LOWER(j.required_skills) LIKE LOWER(?)`;
+      values.push(`%${skill}%`);
+    }
+
+    if (location) {
+      query += ` AND LOWER(j.location) LIKE LOWER(?)`;
+      values.push(`%${location}%`);
+    }
+
+    query += ` ORDER BY j.created_at DESC`;
+
+    const [jobs] = await pool.query(query, values);
 
     return res.status(200).json({
       message: "Jobs fetched successfully",
       count: jobs.length,
+      filters: {
+        skill: skill || null,
+        location: location || null,
+      },
       jobs,
     });
   } catch (error) {
@@ -112,6 +135,7 @@ const getAllJobs = async (req, res) => {
 
     return res.status(500).json({
       message: "Failed to fetch jobs",
+      error: error.message,
     });
   }
 };
