@@ -106,3 +106,12 @@ CREATE TABLE applications (
 );
 
 SHOW TABLES;
+
+INSERT INTO users (name, email, password, role)
+VALUES
+('surya', 'surya@gmail.com', '252676', 'EMPLOYER'),
+('Manthu', 'candidate@gmail.com', '123456', 'CANDIDATE');
+
+--- testing
+SELECT id, name, email, password, role
+FROM users;
