@@ -1,13 +1,16 @@
 const fs = require("fs");
 const pool = require("../config/db");
 const { PDFParse } = require("pdf-parse");
+const { extractSkills } = require("../services/nlpService");
 
+// Upload and process resume
 const uploadResume = async (req, res) => {
   let parser;
 
   try {
     const candidateId = req.user.id;
 
+    // Check whether file was uploaded
     if (!req.file) {
       return res.status(400).json({
         message: "Resume PDF is required",
@@ -40,21 +43,26 @@ const uploadResume = async (req, res) => {
       });
     }
 
-    // Save resume details and extracted text in MySQL
+    // Extract skills using NLP
+    const extractedSkills = extractSkills(extractedText);
+
+    // Store resume information in MySQL
     const [result] = await pool.query(
       `INSERT INTO resumes
        (
          candidate_id,
          file_name,
          file_path,
-         extracted_text
+         extracted_text,
+         extracted_skills
        )
-       VALUES (?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?)`,
       [
         candidateId,
         req.file.originalname,
         filePath,
         extractedText,
+        JSON.stringify(extractedSkills),
       ]
     );
 
@@ -63,12 +71,13 @@ const uploadResume = async (req, res) => {
       resumeId: result.insertId,
       fileName: req.file.originalname,
       textLength: extractedText.length,
+      skills: extractedSkills,
       extractedText: extractedText.substring(0, 1000),
     });
   } catch (error) {
     console.error("Resume upload error:", error);
 
-    // Remove uploaded file if processing fails
+    // Delete uploaded file if processing fails
     if (req.file && fs.existsSync(req.file.path)) {
       fs.unlinkSync(req.file.path);
     }
@@ -78,17 +87,21 @@ const uploadResume = async (req, res) => {
       error: error.message,
     });
   } finally {
-    // Destroy PDF parser safely
+    // Clean up PDF parser
     if (parser) {
       try {
         await parser.destroy();
       } catch (error) {
-        console.error("PDF parser cleanup error:", error.message);
+        console.error(
+          "PDF parser cleanup error:",
+          error.message
+        );
       }
     }
   }
 };
 
+// Get resumes uploaded by logged-in candidate
 const getMyResume = async (req, res) => {
   try {
     const candidateId = req.user.id;
@@ -99,6 +112,7 @@ const getMyResume = async (req, res) => {
         candidate_id,
         file_name,
         extracted_text,
+        extracted_skills,
         created_at
        FROM resumes
        WHERE candidate_id = ?
@@ -106,10 +120,28 @@ const getMyResume = async (req, res) => {
       [candidateId]
     );
 
+    // Convert stored JSON string into an array
+    const formattedResumes = resumes.map((resume) => {
+      let skills = [];
+
+      try {
+        skills = resume.extracted_skills
+          ? JSON.parse(resume.extracted_skills)
+          : [];
+      } catch (error) {
+        skills = [];
+      }
+
+      return {
+        ...resume,
+        extracted_skills: skills,
+      };
+    });
+
     return res.status(200).json({
       message: "Resumes fetched successfully",
-      count: resumes.length,
-      resumes,
+      count: formattedResumes.length,
+      resumes: formattedResumes,
     });
   } catch (error) {
     console.error("Get resume error:", error);
