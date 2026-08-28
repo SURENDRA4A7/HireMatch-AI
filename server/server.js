@@ -7,6 +7,7 @@ const pool = require("./src/config/db");
 const authRoutes = require("./src/routes/authRoutes");
 const profileRoutes = require("./src/routes/profileRoutes");
 const jobRoutes = require("./src/routes/jobRoutes");
+const resumeRoutes = require("./src/routes/resumeRoutes");
 
 const app = express();
 
@@ -48,6 +49,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 
 app.use("/api/jobs", jobRoutes);
+
+app.use("/api/resumes", resumeRoutes);
 
 const PORT = process.env.PORT || 5000;
 
