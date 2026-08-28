@@ -8,6 +8,7 @@ const authRoutes = require("./src/routes/authRoutes");
 const profileRoutes = require("./src/routes/profileRoutes");
 const jobRoutes = require("./src/routes/jobRoutes");
 const resumeRoutes = require("./src/routes/resumeRoutes");
+const matchRoutes = require("./src/routes/matchRoutes");
 
 const app = express();
 
@@ -51,6 +52,8 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/jobs", jobRoutes);
 
 app.use("/api/resumes", resumeRoutes);
+
+app.use("/api/matches", matchRoutes);
 
 const PORT = process.env.PORT || 5000;
 
