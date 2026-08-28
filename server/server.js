@@ -7,9 +7,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
     res.json({
-        message: "HireMatch AI API is running"
+        message: "HireMatch AI API is running ding ding..."
     });
 });
 
