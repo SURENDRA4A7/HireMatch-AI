@@ -115,3 +115,47 @@ VALUES
 --- testing
 SELECT id, name, email, password, role
 FROM users;
+select * from profiles;
+delete from profiles where id=1;
+
+DESCRIBE jobs;
+ALTER TABLE jobs
+ADD COLUMN company VARCHAR(150) NOT NULL AFTER title;
+
+ALTER TABLE jobs
+ADD COLUMN employment_type VARCHAR(50) NOT NULL AFTER location,
+ADD COLUMN salary_min DECIMAL(10,2) NULL AFTER employment_type,
+ADD COLUMN salary_max DECIMAL(10,2) NULL AFTER salary_min;
+
+select * from jobs;
+SELECT id,candidate_id,file_name, LENGTH(extracted_text) AS text_length,created_at
+FROM resumes;
+
+select * from resumes;
+SELECT extracted_text
+FROM resumes
+WHERE id = 1;
+
+ALTER TABLE resumes
+ADD COLUMN extracted_skills TEXT NULL
+AFTER extracted_text;
+
+
+select * from users;
+SELECT
+    id,
+    job_id,
+    candidate_id,
+    resume_id,
+    match_score,
+    status,
+    applied_at
+FROM applications;
+
+
+
+DELETE FROM applications
+WHERE job_id = 3
+AND candidate_id = 2;
+
+select * from resumes;
