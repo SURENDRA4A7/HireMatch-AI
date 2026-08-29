@@ -1,36 +1,35 @@
 import { Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
+import Home from "./pages/Home.jsx";
+import Login from "./pages/auth/Login.jsx";
+import Register from "./pages/auth/Register.jsx";
 
-import Jobs from "./pages/jobs/Jobs";
-import JobDetails from "./pages/jobs/JobDetails";
+import Jobs from "./pages/jobs/Jobs.jsx";
+import JobDetails from "./pages/jobs/JobDetails.jsx";
 
-import CandidateDashboard from "./pages/candidate/CandidateDashboard";
-import ResumeUpload from "./pages/candidate/ResumeUpload";
-import MyApplications from "./pages/candidate/MyApplications";
-import MatchResult from "./pages/candidate/MatchResult";
+import CandidateDashboard from "./pages/candidate/CandidateDashboard.jsx";
+import ResumeUpload from "./pages/candidate/ResumeUpload.jsx";
+import MyApplications from "./pages/candidate/MyApplications.jsx";
+import MatchResult from "./pages/candidate/MatchResult.jsx";
 
-import EmployerDashboard from "./pages/employer/EmployerDashboard";
-import CreateJob from "./pages/employer/CreateJob";
-import MyJobs from "./pages/employer/MyJobs";
-import MatchedCandidates from "./pages/employer/MatchedCandidates";
+import EmployerDashboard from "./pages/employer/EmployerDashboard.jsx";
+import CreateJob from "./pages/employer/CreateJob.jsx";
+import MyJobs from "./pages/employer/MyJobs.jsx";
+import MatchedCandidates from "./pages/employer/MatchedCandidates.jsx";
 
 function App() {
   return (
     <Routes>
-      {/* Public Pages */}
+      {/* Public */}
       <Route path="/" element={<Home />} />
-
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Job Pages */}
+      {/* Jobs */}
       <Route path="/jobs" element={<Jobs />} />
       <Route path="/jobs/:id" element={<JobDetails />} />
 
-      {/* Candidate Pages */}
+      {/* Candidate */}
       <Route
         path="/candidate/dashboard"
         element={<CandidateDashboard />}
@@ -51,7 +50,7 @@ function App() {
         element={<MatchResult />}
       />
 
-      {/* Employer Pages */}
+      {/* Employer */}
       <Route
         path="/employer/dashboard"
         element={<EmployerDashboard />}
