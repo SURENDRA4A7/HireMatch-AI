@@ -1,6 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 
+import Navbar from "./components/Navbar.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+
 import Home from "./pages/Home.jsx";
+
 import Login from "./pages/auth/Login.jsx";
 import Register from "./pages/auth/Register.jsx";
 
@@ -18,60 +22,132 @@ import MyJobs from "./pages/employer/MyJobs.jsx";
 import MatchedCandidates from "./pages/employer/MatchedCandidates.jsx";
 
 function App() {
-  return (
-    <Routes>
-      {/* Public */}
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+return (
+<> <Navbar />
 
-      {/* Jobs */}
-      <Route path="/jobs" element={<Jobs />} />
-      <Route path="/jobs/:id" element={<JobDetails />} />
+  <Routes>
 
-      {/* Candidate */}
-      <Route
-        path="/candidate/dashboard"
-        element={<CandidateDashboard />}
-      />
+    {/* Public Routes */}
+    <Route
+      path="/"
+      element={<Home />}
+    />
 
-      <Route
-        path="/candidate/upload-resume"
-        element={<ResumeUpload />}
-      />
+    <Route
+      path="/login"
+      element={<Login />}
+    />
 
-      <Route
-        path="/candidate/applications"
-        element={<MyApplications />}
-      />
+    <Route
+      path="/register"
+      element={<Register />}
+    />
 
-      <Route
-        path="/candidate/match/:jobId"
-        element={<MatchResult />}
-      />
+    {/* Public Job Routes */}
+    <Route
+      path="/jobs"
+      element={<Jobs />}
+    />
 
-      {/* Employer */}
-      <Route
-        path="/employer/dashboard"
-        element={<EmployerDashboard />}
-      />
+    <Route
+      path="/jobs/:id"
+      element={<JobDetails />}
+    />
 
-      <Route
-        path="/employer/create-job"
-        element={<CreateJob />}
-      />
+    {/* Candidate Protected Routes */}
+    <Route
+      path="/candidate/dashboard"
+      element={
+        <ProtectedRoute
+          allowedRoles={["CANDIDATE"]}
+        >
+          <CandidateDashboard />
+        </ProtectedRoute>
+      }
+    />
 
-      <Route
-        path="/employer/jobs"
-        element={<MyJobs />}
-      />
+    <Route
+      path="/candidate/upload-resume"
+      element={
+        <ProtectedRoute
+          allowedRoles={["CANDIDATE"]}
+        >
+          <ResumeUpload />
+        </ProtectedRoute>
+      }
+    />
 
-      <Route
-        path="/employer/jobs/:jobId/candidates"
-        element={<MatchedCandidates />}
-      />
-    </Routes>
-  );
+    <Route
+      path="/candidate/applications"
+      element={
+        <ProtectedRoute
+          allowedRoles={["CANDIDATE"]}
+        >
+          <MyApplications />
+        </ProtectedRoute>
+      }
+    />
+
+    <Route
+      path="/candidate/match/:jobId"
+      element={
+        <ProtectedRoute
+          allowedRoles={["CANDIDATE"]}
+        >
+          <MatchResult />
+        </ProtectedRoute>
+      }
+    />
+
+    {/* Employer Protected Routes */}
+    <Route
+      path="/employer/dashboard"
+      element={
+        <ProtectedRoute
+          allowedRoles={["EMPLOYER"]}
+        >
+          <EmployerDashboard />
+        </ProtectedRoute>
+      }
+    />
+
+    <Route
+      path="/employer/create-job"
+      element={
+        <ProtectedRoute
+          allowedRoles={["EMPLOYER"]}
+        >
+          <CreateJob />
+        </ProtectedRoute>
+      }
+    />
+
+    <Route
+      path="/employer/jobs"
+      element={
+        <ProtectedRoute
+          allowedRoles={["EMPLOYER"]}
+        >
+          <MyJobs />
+        </ProtectedRoute>
+      }
+    />
+
+    <Route
+      path="/employer/jobs/:jobId/candidates"
+      element={
+        <ProtectedRoute
+          allowedRoles={["EMPLOYER"]}
+        >
+          <MatchedCandidates />
+        </ProtectedRoute>
+      }
+    />
+
+  </Routes>
+</>
+
+);
 }
 
 export default App;
