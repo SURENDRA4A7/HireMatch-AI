@@ -21,6 +21,9 @@ import CreateJob from "./pages/employer/CreateJob.jsx";
 import MyJobs from "./pages/employer/MyJobs.jsx";
 import MatchedCandidates from "./pages/employer/MatchedCandidates.jsx";
 
+import EditJob from "./pages/employer/EditJob";
+import EmployerApplications from "./pages/employer/EmployerApplications";
+
 function App() {
 return (
 <> <Navbar />
@@ -143,6 +146,14 @@ return (
         </ProtectedRoute>
       }
     />
+    <Route
+        path="/employer/edit-job/:id"
+        element={<EditJob />}
+   />
+     <Route
+       path="/employer/jobs/:jobId/applications"
+      element={<EmployerApplications />}
+     />
 
   </Routes>
 </>
