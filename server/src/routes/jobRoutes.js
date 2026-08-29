@@ -5,6 +5,7 @@ const router = express.Router();
 const {
   createJob,
   getAllJobs,
+  getEmployerJobs,
   getJobById,
   updateJob,
   deleteJob,
@@ -20,7 +21,8 @@ const {
 // PUBLIC ROUTES
 // ================================
 
-// Get all jobs
+// Get all open jobs
+
 router.get(
   "/",
   getAllJobs
@@ -32,6 +34,7 @@ router.get(
 // ================================
 
 // Create a new job
+
 router.post(
   "/",
   authenticateToken,
@@ -40,7 +43,18 @@ router.post(
 );
 
 
+// Get logged-in employer's jobs
+
+router.get(
+  "/employer/my-jobs",
+  authenticateToken,
+  authorizeRoles("EMPLOYER"),
+  getEmployerJobs
+);
+
+
 // Update job
+
 router.put(
   "/:id",
   authenticateToken,
@@ -50,6 +64,7 @@ router.put(
 
 
 // Delete job
+
 router.delete(
   "/:id",
   authenticateToken,
