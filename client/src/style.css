@@ -393,3 +393,140 @@ justify-content: center;
     align-items: flex-start;
   }
 }
+
+/* =========================
+   Job Details Page
+========================= */
+
+.job-details-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 25px;
+}
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+
+  text-decoration: none;
+  color: #2563eb;
+
+  font-weight: 600;
+}
+
+.job-details-card {
+  padding: 35px;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.job-details-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.job-details-header h1 {
+  margin: 0 0 10px;
+}
+
+.job-details-header h2 {
+  margin: 0 0 10px;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  color: #4b5563;
+}
+
+.job-status {
+  height: fit-content;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.job-details-section {
+  margin-top: 28px;
+}
+
+.job-details-section h3 {
+  margin-bottom: 10px;
+
+  font-size: 17px;
+}
+
+.job-details-section p {
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.salary-text {
+  font-size: 18px;
+  font-weight: 600;
+
+  color: #111827 !important;
+}
+
+.job-details-actions {
+  margin-top: 35px;
+}
+
+.apply-button {
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.apply-button:hover {
+  opacity: 0.9;
+}
+
+.employer-info {
+  padding: 12px;
+
+  text-align: center;
+
+  border-radius: 6px;
+
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .job-details-page {
+    padding: 25px 15px;
+  }
+
+  .job-details-card {
+    padding: 22px;
+  }
+
+  .job-details-header {
+    flex-direction: column;
+  }
+}
