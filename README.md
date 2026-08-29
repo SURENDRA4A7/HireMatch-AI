@@ -512,6 +512,7 @@ Possible future enhancements include:
 * Docker containerization
 
 ---
+<img width="1902" height="917" alt="image" src="https://github.com/user-attachments/assets/f381d6d1-4f06-4c84-9d8e-20b3550f3652" />
 
 
 ```text
