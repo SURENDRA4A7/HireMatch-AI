@@ -1,8 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
+
 import { useAuth } from "../context/AuthContext";
 
+
 function Navbar() {
+
   const navigate = useNavigate();
+
 
   const {
     user,
@@ -10,101 +14,205 @@ function Navbar() {
     logout,
   } = useAuth();
 
+
   const handleLogout = () => {
+
     logout();
+
     navigate("/login");
+
   };
 
+
   return (
+
     <nav className="navbar">
+
       <div className="navbar-container">
+
+
+        {/* LOGO */}
 
         <Link
           to="/"
           className="navbar-logo"
         >
-          HireMatch AI
+
+          <span className="navbar-logo-icon">
+            H
+          </span>
+
+          <span>
+            HireMatch
+            <strong> AI</strong>
+          </span>
+
         </Link>
+
+
+        {/* NAVIGATION LINKS */}
 
         <div className="navbar-links">
 
-          <Link to="/">
+
+          <Link
+            to="/"
+            className="nav-link"
+          >
             Home
           </Link>
 
-          <Link to="/jobs">
+
+          <Link
+            to="/jobs"
+            className="nav-link"
+          >
             Jobs
           </Link>
 
+
+          {/* NOT LOGGED IN */}
+
           {!isAuthenticated && (
+
             <>
-              <Link to="/login">
+
+              <Link
+                to="/login"
+                className="nav-link"
+              >
                 Login
               </Link>
 
+
               <Link
                 to="/register"
-                className="register-link"
+                className="navbar-register-button"
               >
-                Register
+                Get Started
               </Link>
+
             </>
+
           )}
+
+
+          {/* CANDIDATE NAVIGATION */}
 
           {isAuthenticated &&
             user?.role === "CANDIDATE" && (
+
               <>
-                <Link to="/candidate/dashboard">
+
+                <Link
+                  to="/candidate/dashboard"
+                  className="nav-link"
+                >
                   Dashboard
                 </Link>
 
-                <Link to="/candidate/upload-resume">
-                  Upload Resume
+
+                <Link
+                  to="/candidate/upload-resume"
+                  className="nav-link"
+                >
+                  Resume
                 </Link>
 
-                <Link to="/candidate/applications">
-                  My Applications
+
+                <Link
+                  to="/candidate/applications"
+                  className="nav-link"
+                >
+                  Applications
                 </Link>
+
               </>
+
             )}
+
+
+          {/* EMPLOYER NAVIGATION */}
 
           {isAuthenticated &&
             user?.role === "EMPLOYER" && (
+
               <>
-                <Link to="/employer/dashboard">
+
+                <Link
+                  to="/employer/dashboard"
+                  className="nav-link"
+                >
                   Dashboard
                 </Link>
 
-                <Link to="/employer/create-job">
+
+                <Link
+                  to="/employer/create-job"
+                  className="nav-link"
+                >
                   Post Job
                 </Link>
 
-                <Link to="/employer/jobs">
+
+                <Link
+                  to="/employer/jobs"
+                  className="nav-link"
+                >
                   My Jobs
                 </Link>
+
               </>
+
             )}
 
+
+          {/* LOGGED IN USER */}
+
           {isAuthenticated && (
-            <>
-              <span className="navbar-user">
-                {user?.name}
-              </span>
+
+            <div className="navbar-user-section">
+
+              <div className="navbar-user-info">
+
+                <span className="navbar-user-avatar">
+                  {user?.name
+                    ? user.name
+                        .charAt(0)
+                        .toUpperCase()
+                    : "U"}
+                </span>
+
+
+                <span className="navbar-user-name">
+                  {user?.name}
+                </span>
+
+              </div>
+
 
               <button
                 type="button"
                 onClick={handleLogout}
-                className="logout-button"
+                className="navbar-logout-button"
               >
                 Logout
               </button>
-            </>
+
+            </div>
+
           )}
 
+
         </div>
+
       </div>
+
     </nav>
+
   );
+
 }
+
 
 export default Navbar;

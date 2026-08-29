@@ -1,5 +1,7 @@
 const express = require("express");
 
+const router = express.Router();
+
 const {
   createJob,
   getAllJobs,
@@ -10,40 +12,62 @@ const {
 
 const {
   authenticateToken,
-  authorizeRole,
+  authorizeRoles,
 } = require("../middleware/authMiddleware");
 
-const router = express.Router();
 
-router.post(
-  "/",
-  authenticateToken,
-  authorizeRole("EMPLOYER"),
-  createJob
-);
+// ================================
+// PUBLIC ROUTES
+// ================================
 
+// Get all jobs
 router.get(
   "/",
   getAllJobs
 );
+
+
+// ================================
+// EMPLOYER PROTECTED ROUTES
+// ================================
+
+// Create a new job
+router.post(
+  "/",
+  authenticateToken,
+  authorizeRoles("EMPLOYER"),
+  createJob
+);
+
+
+// Update job
+router.put(
+  "/:id",
+  authenticateToken,
+  authorizeRoles("EMPLOYER"),
+  updateJob
+);
+
+
+// Delete job
+router.delete(
+  "/:id",
+  authenticateToken,
+  authorizeRoles("EMPLOYER"),
+  deleteJob
+);
+
+
+// ================================
+// SINGLE JOB ROUTE
+// IMPORTANT:
+// Keep this route at the bottom
+// ================================
 
 router.get(
   "/:id",
   getJobById
 );
 
-router.put(
-  "/:id",
-  authenticateToken,
-  authorizeRole("EMPLOYER"),
-  updateJob
-);
-
-router.delete(
-  "/:id",
-  authenticateToken,
-  authorizeRole("EMPLOYER"),
-  deleteJob
-);
 
 module.exports = router;

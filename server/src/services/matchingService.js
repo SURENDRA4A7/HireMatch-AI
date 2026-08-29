@@ -1,163 +1,324 @@
 const natural = require("natural");
 
-const TfIdf = natural.TfIdf;
 
-/**
- * Calculate cosine similarity between two vectors.
- */
-const cosineSimilarity = (vectorA, vectorB) => {
-  let dotProduct = 0;
-  let magnitudeA = 0;
-  let magnitudeB = 0;
-
-  for (let i = 0; i < vectorA.length; i++) {
-    dotProduct += vectorA[i] * vectorB[i];
-
-    magnitudeA += vectorA[i] * vectorA[i];
-    magnitudeB += vectorB[i] * vectorB[i];
-  }
-
-  magnitudeA = Math.sqrt(magnitudeA);
-  magnitudeB = Math.sqrt(magnitudeB);
-
-  if (magnitudeA === 0 || magnitudeB === 0) {
-    return 0;
-  }
-
-  return dotProduct / (magnitudeA * magnitudeB);
+const tokenizeText = (text) => {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9+#.\s]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
 };
 
-/**
- * Calculate TF-IDF similarity between candidate resume
- * and job description.
- */
-const calculateTextSimilarity = (candidateText, jobText) => {
-  if (!candidateText || !jobText) {
-    return 0;
-  }
 
-  const tfidf = new TfIdf();
-
-  tfidf.addDocument(candidateText.toLowerCase());
-  tfidf.addDocument(jobText.toLowerCase());
-
-  const vocabulary = new Set();
-
-  tfidf.listTerms(0).forEach((item) => {
-    vocabulary.add(item.term);
-  });
-
-  tfidf.listTerms(1).forEach((item) => {
-    vocabulary.add(item.term);
-  });
-
-  const terms = Array.from(vocabulary);
-
-  const candidateVector = terms.map((term) =>
-    tfidf.tfidf(term, 0)
-  );
-
-  const jobVector = terms.map((term) =>
-    tfidf.tfidf(term, 1)
-  );
-
-  const similarity = cosineSimilarity(
-    candidateVector,
-    jobVector
-  );
-
-  return Math.round(similarity * 100);
+const normalizeSkill = (skill) => {
+  return String(skill || "")
+    .toLowerCase()
+    .trim()
+    .replace(/\./g, "")
+    .replace(/\s+/g, " ");
 };
 
-/**
- * Calculate skill-based matching.
- */
-const calculateSkillMatch = (
-  candidateSkills,
+
+const calculateTextSimilarity = (
+  resumeText,
+  jobDescription,
   requiredSkills
 ) => {
-  if (
-    !Array.isArray(candidateSkills) ||
-    !Array.isArray(requiredSkills) ||
-    requiredSkills.length === 0
-  ) {
-    return {
-      score: 0,
-      matchedSkills: [],
-      missingSkills: requiredSkills || [],
-    };
+
+  const tfidf = new natural.TfIdf();
+
+  const resumeContent =
+    String(resumeText || "");
+
+  let skillsContent = "";
+
+  if (Array.isArray(requiredSkills)) {
+    skillsContent =
+      requiredSkills.join(" ");
+  } else {
+    skillsContent =
+      String(requiredSkills || "");
   }
 
-  const candidateSkillSet = new Set(
-    candidateSkills.map((skill) =>
-      skill.toLowerCase().trim()
-    )
+
+  const jobContent = `
+    ${jobDescription || ""}
+    ${skillsContent}
+  `;
+
+
+  tfidf.addDocument(
+    resumeContent
   );
 
-  const matchedSkills = [];
-  const missingSkills = [];
+  tfidf.addDocument(
+    jobContent
+  );
 
-  requiredSkills.forEach((skill) => {
-    const normalizedSkill = skill.toLowerCase().trim();
 
-    if (candidateSkillSet.has(normalizedSkill)) {
-      matchedSkills.push(skill);
-    } else {
-      missingSkills.push(skill);
+  const terms = new Set();
+
+
+  tfidf.listTerms(0).forEach(
+    (item) => {
+      terms.add(item.term);
     }
+  );
+
+
+  tfidf.listTerms(1).forEach(
+    (item) => {
+      terms.add(item.term);
+    }
+  );
+
+
+  let dotProduct = 0;
+
+  let resumeMagnitude = 0;
+
+  let jobMagnitude = 0;
+
+
+  terms.forEach((term) => {
+
+    const resumeValue =
+      tfidf.tfidf(term, 0);
+
+    const jobValue =
+      tfidf.tfidf(term, 1);
+
+
+    dotProduct +=
+      resumeValue * jobValue;
+
+    resumeMagnitude +=
+      resumeValue * resumeValue;
+
+    jobMagnitude +=
+      jobValue * jobValue;
+
   });
 
-  const score = Math.round(
-    (matchedSkills.length / requiredSkills.length) * 100
+
+  if (
+    resumeMagnitude === 0 ||
+    jobMagnitude === 0
+  ) {
+    return 0;
+  }
+
+
+  const similarity =
+    dotProduct /
+    (
+      Math.sqrt(resumeMagnitude) *
+      Math.sqrt(jobMagnitude)
+    );
+
+
+  return Math.round(
+    similarity * 100
   );
 
-  return {
-    score,
-    matchedSkills,
-    missingSkills,
-  };
 };
 
-/**
- * Combine TF-IDF similarity and skill matching.
- */
-const calculateMatchScore = ({
-  candidateText,
-  jobText,
-  candidateSkills,
-  requiredSkills,
-}) => {
-  const textScore = calculateTextSimilarity(
-    candidateText,
-    jobText
+
+const extractRequiredSkills = (
+  requiredSkills
+) => {
+
+  if (!requiredSkills) {
+    return [];
+  }
+
+
+  // Already an array
+  if (Array.isArray(requiredSkills)) {
+
+    return requiredSkills
+      .map(
+        (skill) =>
+          String(skill).trim()
+      )
+      .filter(Boolean);
+
+  }
+
+
+  // String value
+  if (
+    typeof requiredSkills ===
+    "string"
+  ) {
+
+    // Try JSON array first
+    try {
+
+      const parsedSkills =
+        JSON.parse(requiredSkills);
+
+
+      if (
+        Array.isArray(parsedSkills)
+      ) {
+
+        return parsedSkills
+          .map(
+            (skill) =>
+              String(skill).trim()
+          )
+          .filter(Boolean);
+
+      }
+
+    } catch (error) {
+      // Normal comma-separated string
+    }
+
+
+    return requiredSkills
+      .split(",")
+      .map(
+        (skill) =>
+          skill.trim()
+      )
+      .filter(Boolean);
+
+  }
+
+
+  return [];
+
+};
+
+
+const calculateSkillMatch = (
+  resumeText,
+  requiredSkills
+) => {
+
+  const requiredSkillList =
+    extractRequiredSkills(
+      requiredSkills
+    );
+
+
+  const normalizedResume =
+    normalizeSkill(
+      resumeText
+    );
+
+
+  const matchedSkills = [];
+
+  const missingSkills = [];
+
+
+  requiredSkillList.forEach(
+    (skill) => {
+
+      const normalizedSkill =
+        normalizeSkill(skill);
+
+
+      if (
+        normalizedSkill &&
+        normalizedResume.includes(
+          normalizedSkill
+        )
+      ) {
+
+        matchedSkills.push(
+          String(skill)
+        );
+
+      } else {
+
+        missingSkills.push(
+          String(skill)
+        );
+
+      }
+
+    }
   );
 
-  const skillResult = calculateSkillMatch(
-    candidateSkills,
+
+  const skillMatchScore =
+    requiredSkillList.length > 0
+      ? Math.round(
+          (
+            matchedSkills.length /
+            requiredSkillList.length
+          ) * 100
+        )
+      : 0;
+
+
+  return {
+
+    skillMatchScore,
+
+    matchedSkills,
+
+    missingSkills,
+
+  };
+
+};
+
+
+const calculateMatch = (
+  resumeText,
+  jobDescription,
+  requiredSkills
+) => {
+
+  const textSimilarity =
+    calculateTextSimilarity(
+      resumeText,
+      jobDescription,
+      requiredSkills
+    );
+
+
+  const {
+    skillMatchScore,
+    matchedSkills,
+    missingSkills,
+  } = calculateSkillMatch(
+    resumeText,
     requiredSkills
   );
 
-  /*
-   * Skill matching gets more weight because
-   * required skills are important for recruitment.
-   */
-  const finalScore = Math.round(
-    textScore * 0.4 +
-    skillResult.score * 0.6
-  );
+
+  const matchScore =
+    Math.round(
+      textSimilarity * 0.4 +
+      skillMatchScore * 0.6
+    );
+
 
   return {
-    matchScore: finalScore,
-    textSimilarity: textScore,
-    skillMatchScore: skillResult.score,
-    matchedSkills: skillResult.matchedSkills,
-    missingSkills: skillResult.missingSkills,
+
+    matchScore,
+
+    textSimilarity,
+
+    skillMatchScore,
+
+    matchedSkills,
+
+    missingSkills,
+
   };
+
 };
 
+
 module.exports = {
-  cosineSimilarity,
-  calculateTextSimilarity,
-  calculateSkillMatch,
-  calculateMatchScore,
+
+  calculateMatch,
+
 };

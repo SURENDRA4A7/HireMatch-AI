@@ -9,7 +9,7 @@ const {
 
 const {
   authenticateToken,
-  authorizeRole,
+  authorizeRoles,
 } = require("../middleware/authMiddleware");
 
 const router = express.Router();
@@ -53,7 +53,7 @@ const upload = multer({
 router.post(
   "/upload",
   authenticateToken,
-  authorizeRole("CANDIDATE"),
+  authorizeRoles("CANDIDATE"),
   upload.single("resume"),
   uploadResume
 );
@@ -61,7 +61,7 @@ router.post(
 router.get(
   "/my",
   authenticateToken,
-  authorizeRole("CANDIDATE"),
+  authorizeRoles("CANDIDATE"),
   getMyResume
 );
 

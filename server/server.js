@@ -11,6 +11,8 @@ const resumeRoutes = require("./src/routes/resumeRoutes");
 const matchRoutes = require("./src/routes/matchRoutes");
 const applicationRoutes = require("./src/routes/applicationRoutes");
 const candidateRoutes = require("./src/routes/candidateRoutes");
+const matchingRoutes = require("./src/routes/matchingRoutes");
+const dashboardRoutes = require("./src/routes/dashboardRoutes");
 
 const app = express();
 
@@ -60,6 +62,10 @@ app.use("/api/matches", matchRoutes);
 app.use("/api/applications", applicationRoutes);
 
 app.use("/api/candidates", candidateRoutes);
+
+app.use("/api/matching", matchingRoutes);
+
+app.use("/api/dashboard",dashboardRoutes);
 
 const PORT = process.env.PORT || 5000;
 

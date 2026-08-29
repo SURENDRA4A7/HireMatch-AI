@@ -4,7 +4,7 @@ const {
 } = require("../services/nlpService");
 
 const {
-  calculateMatchScore,
+  calculateMatch,
 } = require("../services/matchingService");
 
 // Get match score between logged-in candidate and a job
@@ -132,7 +132,7 @@ const getJobMatch = async (req, res) => {
     // 6. Calculate match
     // --------------------------------------------------
 
-    const matchResult = calculateMatchScore({
+    const matchResult = calculateMatch({
       candidateText: resume.extracted_text,
       jobText,
       candidateSkills,
