@@ -512,8 +512,28 @@ Possible future enhancements include:
 * Docker containerization
 
 ---
+**Home Page**
+<img width="1902" height="897" alt="image" src="https://github.com/user-attachments/assets/01dbb735-7d78-4e06-854a-9e9b8d824e9f" />
+**Candidate Dashboard**
+<img width="1887" height="910" alt="image" src="https://github.com/user-attachments/assets/0eb33f1e-3938-460c-9448-3a4cdb60f54d" />
+**Jobs Page**
 <img width="1902" height="917" alt="image" src="https://github.com/user-attachments/assets/f381d6d1-4f06-4c84-9d8e-20b3550f3652" />
-
+**Match Result Page**
+<img width="1867" height="900" alt="image" src="https://github.com/user-attachments/assets/f6284b81-ba6b-4626-94d7-2e6cd8365b87" />
+**My Applications**
+<img width="1582" height="807" alt="image" src="https://github.com/user-attachments/assets/0a6271a8-3585-41dd-af3f-16f990592a41" />
+**Employer Dashboard**
+<img width="1725" height="890" alt="image" src="https://github.com/user-attachments/assets/9dd2adfc-3322-4ba9-9c31-aa9e0232a704" />
+**Post Job**
+<img width="1432" height="807" alt="image" src="https://github.com/user-attachments/assets/61a16fdf-cc1d-4d3c-9eb1-775e088e2ac4" />
+**My Jobs**
+<img width="1717" height="912" alt="image" src="https://github.com/user-attachments/assets/8231ebfe-7e0a-4919-885e-835dd1b6d664" />
+**Edit Job**
+<img width="1473" height="822" alt="image" src="https://github.com/user-attachments/assets/485a2db1-f323-4740-8bbb-32c083f73855" />
+**View Applications**
+<img width="1691" height="730" alt="image" src="https://github.com/user-attachments/assets/2fde96d4-6575-4c30-9425-b9133a4e681b" />
+**Email Notificatrion**
+<img width="1327" height="687" alt="image" src="https://github.com/user-attachments/assets/a0fbfb5b-693e-48a2-a97a-b0f91002a47f" />
 
 ```text
 Home Page
