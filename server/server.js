@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const pool = require("./src/config/db");
 
+// Routes
 const authRoutes = require("./src/routes/authRoutes");
 const profileRoutes = require("./src/routes/profileRoutes");
 const jobRoutes = require("./src/routes/jobRoutes");
@@ -16,7 +17,10 @@ const dashboardRoutes = require("./src/routes/dashboardRoutes");
 
 const app = express();
 
-// CORS configuration
+// ================================
+// CORS CONFIGURATION
+// ================================
+
 const allowedOrigins = [
   "http://localhost:5173",
   "https://hire-match-ai-wheat.vercel.app",
@@ -24,21 +28,29 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (Postman, server-to-server, etc.)
+    origin: (origin, callback) => {
+      // Allow requests without Origin
+      // Example: browser URL, Postman, health checks
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+        return callback(null, true);
       }
+
+      return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
   })
 );
 
+// ================================
+// MIDDLEWARE
+// ================================
+
 app.use(express.json());
 
-// Root route - for Render backend check
+// ================================
+// ROOT HEALTH CHECK
+// ================================
+
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "HireMatch AI Backend is running successfully",
@@ -46,14 +58,21 @@ app.get("/", (req, res) => {
   });
 });
 
-// API health check
+// ================================
+// API HEALTH CHECK
+// ================================
+
 app.get("/api/", (req, res) => {
   res.status(200).json({
     message: "HireMatch AI API is running",
+    status: "OK",
   });
 });
 
-// Database connection test
+// ================================
+// DATABASE CONNECTION TEST
+// ================================
+
 app.get("/api/db-test", async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -69,11 +88,15 @@ app.get("/api/db-test", async (req, res) => {
 
     return res.status(500).json({
       message: "MySQL connection failed",
+      error: error.message,
     });
   }
 });
 
-// API Routes
+// ================================
+// API ROUTES
+// ================================
+
 app.use("/api/auth", authRoutes);
 
 app.use("/api/profile", profileRoutes);
@@ -92,9 +115,34 @@ app.use("/api/matching", matchingRoutes);
 
 app.use("/api/dashboard", dashboardRoutes);
 
-// Server
+// ================================
+// 404 HANDLER
+// ================================
+
+app.use((req, res) => {
+  res.status(404).json({
+    message: "Route not found",
+  });
+});
+
+// ================================
+// ERROR HANDLER
+// ================================
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+
+  res.status(500).json({
+    message: "Internal server error",
+  });
+});
+
+// ================================
+// START SERVER
+// ================================
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`HireMatch AI server running on port ${PORT}`);
 });
