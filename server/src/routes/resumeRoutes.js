@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const {
   uploadResume,
@@ -14,9 +15,28 @@ const {
 
 const router = express.Router();
 
+// =================================
+// ENSURE UPLOAD DIRECTORY EXISTS
+// =================================
+
+const uploadDirectory = path.join(
+  process.cwd(),
+  "uploads"
+);
+
+if (!fs.existsSync(uploadDirectory)) {
+  fs.mkdirSync(uploadDirectory, {
+    recursive: true,
+  });
+}
+
+// =================================
+// MULTER STORAGE
+// =================================
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, uploadDirectory);
   },
 
   filename: (req, file, cb) => {
@@ -24,14 +44,20 @@ const storage = multer.diskStorage({
       Date.now() +
       "-" +
       Math.round(Math.random() * 1e9) +
-      path.extname(file.originalname);
+      path.extname(file.originalname).toLowerCase();
 
     cb(null, uniqueName);
   },
 });
 
+// =================================
+// FILE FILTER
+// =================================
+
 const fileFilter = (req, file, cb) => {
-  const extension = path.extname(file.originalname).toLowerCase();
+  const extension = path
+    .extname(file.originalname)
+    .toLowerCase();
 
   if (extension !== ".pdf") {
     return cb(
@@ -42,6 +68,10 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
+// =================================
+// MULTER CONFIGURATION
+// =================================
+
 const upload = multer({
   storage,
   fileFilter,
@@ -50,6 +80,10 @@ const upload = multer({
   },
 });
 
+// =================================
+// UPLOAD RESUME
+// =================================
+
 router.post(
   "/upload",
   authenticateToken,
@@ -57,6 +91,10 @@ router.post(
   upload.single("resume"),
   uploadResume
 );
+
+// =================================
+// GET MY RESUME
+// =================================
 
 router.get(
   "/my",
