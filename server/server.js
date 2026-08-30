@@ -16,20 +16,44 @@ const dashboardRoutes = require("./src/routes/dashboardRoutes");
 
 const app = express();
 
+// CORS configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://hire-match-ai-wheat.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      // Allow requests with no origin (Postman, server-to-server, etc.)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
   })
 );
 
 app.use(express.json());
 
+// Root route - for Render backend check
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "HireMatch AI Backend is running successfully",
+    status: "OK",
+  });
+});
+
+// API health check
 app.get("/api/", (req, res) => {
   res.status(200).json({
     message: "HireMatch AI API is running",
   });
 });
 
+// Database connection test
 app.get("/api/db-test", async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -49,6 +73,7 @@ app.get("/api/db-test", async (req, res) => {
   }
 });
 
+// API Routes
 app.use("/api/auth", authRoutes);
 
 app.use("/api/profile", profileRoutes);
@@ -65,8 +90,9 @@ app.use("/api/candidates", candidateRoutes);
 
 app.use("/api/matching", matchingRoutes);
 
-app.use("/api/dashboard",dashboardRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
+// Server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
