@@ -1,18 +1,18 @@
 const pool = require("../config/db");
 
 
-// =====================================================
+
 // EMPLOYER - VIEW MATCHED CANDIDATES FOR A JOB
-// =====================================================
+
 
 const getMatchedCandidates = async (req, res) => {
   try {
     const employerId = req.user.id;
     const { jobId } = req.params;
 
-    // -------------------------------------------------
+   
     // 1. Validate Job ID
-    // -------------------------------------------------
+   
 
     if (!jobId || isNaN(jobId)) {
       return res.status(400).json({
@@ -20,9 +20,9 @@ const getMatchedCandidates = async (req, res) => {
       });
     }
 
-    // -------------------------------------------------
+    
     // 2. Verify Job Belongs To Employer
-    // -------------------------------------------------
+   
 
     const [jobs] = await pool.query(
       `SELECT
@@ -45,9 +45,9 @@ const getMatchedCandidates = async (req, res) => {
 
     const job = jobs[0];
 
-    // -------------------------------------------------
+
     // 3. Get Applications + Candidate Details
-    // -------------------------------------------------
+   
 
     const [candidates] = await pool.query(
       `SELECT
@@ -80,9 +80,7 @@ const getMatchedCandidates = async (req, res) => {
       [jobId]
     );
 
-    // -------------------------------------------------
     // 4. Format Candidate Data
-    // -------------------------------------------------
 
     const formattedCandidates = candidates.map(
       (candidate) => {
@@ -125,9 +123,7 @@ const getMatchedCandidates = async (req, res) => {
       }
     );
 
-    // -------------------------------------------------
     // 5. Response
-    // -------------------------------------------------
 
     return res.status(200).json({
       message: "Matched candidates fetched successfully",
@@ -158,18 +154,14 @@ const getMatchedCandidates = async (req, res) => {
 };
 
 
-// =====================================================
 // EMPLOYER - VIEW SINGLE CANDIDATE DETAILS
-// =====================================================
 
 const getCandidateDetails = async (req, res) => {
   try {
     const employerId = req.user.id;
     const { applicationId } = req.params;
 
-    // -------------------------------------------------
     // Get Application + Verify Employer Ownership
-    // -------------------------------------------------
 
     const [results] = await pool.query(
       `SELECT

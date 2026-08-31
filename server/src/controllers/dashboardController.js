@@ -1,9 +1,9 @@
 const pool = require("../config/db");
 
 
-// =====================================
+
 // CANDIDATE DASHBOARD
-// =====================================
+
 
 const getCandidateDashboard = async (
   req,
@@ -14,9 +14,8 @@ const getCandidateDashboard = async (
     const candidateId = req.user.id;
 
 
-    // =====================================
+   
     // TOTAL APPLICATIONS
-    // =====================================
 
     const [
       totalResult,
@@ -28,9 +27,7 @@ const getCandidateDashboard = async (
     );
 
 
-    // =====================================
     // APPLICATION STATUS COUNTS
-    // =====================================
 
     const [
       statusResult,
@@ -62,9 +59,8 @@ const getCandidateDashboard = async (
     );
 
 
-    // =====================================
     // RECENT APPLICATIONS
-    // =====================================
+    
 
     const [
       recentApplications,
@@ -151,9 +147,7 @@ const getCandidateDashboard = async (
 };
 
 
-// =====================================
-// EMPLOYER DASHBOARD
-// =====================================
+      // EMPLOYER DASHBOARD
 
 const getEmployerDashboard = async (
   req,
@@ -164,9 +158,7 @@ const getEmployerDashboard = async (
     const employerId = req.user.id;
 
 
-    // =====================================
-    // TOTAL JOBS POSTED
-    // =====================================
+          // TOTAL JOBS POSTED
 
     const [
       totalJobsResult,
@@ -178,9 +170,7 @@ const getEmployerDashboard = async (
     );
 
 
-    // =====================================
-    // TOTAL APPLICATIONS RECEIVED
-    // =====================================
+            // TOTAL APPLICATIONS RECEIVED
 
     const [
       totalApplicationsResult,
@@ -197,9 +187,8 @@ const getEmployerDashboard = async (
     );
 
 
-    // =====================================
-    // APPLICATION STATUS COUNTS
-    // =====================================
+          // APPLICATION STATUS COUNTS
+    
 
     const [
       statusResult,
@@ -239,10 +228,9 @@ const getEmployerDashboard = async (
     );
 
 
-    // =====================================
+    
     // RECENT JOBS
-    // =====================================
-
+    
     const [
       recentJobs,
     ] = await pool.query(
@@ -266,10 +254,9 @@ const getEmployerDashboard = async (
     );
 
 
-    // =====================================
+    
     // RECENT APPLICATIONS
-    // =====================================
-
+    
     const [
       recentApplications,
     ] = await pool.query(
@@ -305,9 +292,10 @@ const getEmployerDashboard = async (
     );
 
 
-    // =====================================
+    
+    
     // DASHBOARD RESPONSE
-    // =====================================
+    
 
     return res.status(200).json({
 
@@ -370,9 +358,9 @@ const getEmployerDashboard = async (
 };
 
 
-// =====================================
+
 // EXPORT CONTROLLERS
-// =====================================
+
 
 module.exports = {
 

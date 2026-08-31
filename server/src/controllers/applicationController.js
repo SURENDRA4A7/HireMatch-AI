@@ -10,9 +10,8 @@ const {
 } = require("../services/emailService");
 
 
-// =====================================================
+
 // CANDIDATE - APPLY FOR JOB
-// =====================================================
 
 const applyForJob = async (req, res) => {
 
@@ -29,9 +28,9 @@ const applyForJob = async (req, res) => {
     } = req.body || {};
 
 
-    // -------------------------------------------------
+    
     // 1. Validate Job ID
-    // -------------------------------------------------
+   
 
     if (!jobId || isNaN(jobId)) {
 
@@ -45,9 +44,9 @@ const applyForJob = async (req, res) => {
     }
 
 
-    // -------------------------------------------------
+    
     // 2. Get Job
-    // -------------------------------------------------
+   
 
     const [jobs] =
       await pool.query(
@@ -88,9 +87,9 @@ const applyForJob = async (req, res) => {
       jobs[0];
 
 
-    // -------------------------------------------------
+    
     // 3. Check Job Status
-    // -------------------------------------------------
+  
 
     if (job.status !== "OPEN") {
 
@@ -104,9 +103,9 @@ const applyForJob = async (req, res) => {
     }
 
 
-    // -------------------------------------------------
+    
     // 4. Get Candidate + Latest Resume
-    // -------------------------------------------------
+    
 
     const [candidates] =
       await pool.query(
@@ -173,9 +172,9 @@ const applyForJob = async (req, res) => {
       resumes[0];
 
 
-    // -------------------------------------------------
+   
     // 5. Check Duplicate Application
-    // -------------------------------------------------
+    
 
     const [existingApplications] =
       await pool.query(
@@ -213,9 +212,9 @@ const applyForJob = async (req, res) => {
     }
 
 
-    // -------------------------------------------------
+   
     // 6. Calculate Match Score
-    // -------------------------------------------------
+    
 
     const matchResult =
       calculateMatch(
@@ -235,9 +234,9 @@ const applyForJob = async (req, res) => {
       ) || 0;
 
 
-    // -------------------------------------------------
+    
     // 7. Create Application
-    // -------------------------------------------------
+    
 
     const [result] =
       await pool.query(
@@ -262,9 +261,9 @@ const applyForJob = async (req, res) => {
       );
 
 
-    // -------------------------------------------------
+   
     // 8. Send Application Confirmation Email
-    // -------------------------------------------------
+    
 
     sendApplicationConfirmation(
 
@@ -288,9 +287,9 @@ const applyForJob = async (req, res) => {
     );
 
 
-    // -------------------------------------------------
+   
     // 9. Response
-    // -------------------------------------------------
+   
 
     return res.status(201).json({
 
@@ -362,9 +361,9 @@ const applyForJob = async (req, res) => {
 };
 
 
-// =====================================================
+
 // CANDIDATE - VIEW OWN APPLICATIONS
-// =====================================================
+
 
 const getMyApplications =
   async (req, res) => {
@@ -444,9 +443,9 @@ const getMyApplications =
   };
 
 
-// =====================================================
+
 // EMPLOYER - VIEW APPLICATIONS
-// =====================================================
+
 
 const getEmployerApplications =
   async (req, res) => {
@@ -534,9 +533,9 @@ const getEmployerApplications =
   };
 
 
-// =====================================================
+
 // EMPLOYER - UPDATE APPLICATION STATUS
-// =====================================================
+
 
 const updateApplicationStatus =
   async (req, res) => {
@@ -555,9 +554,9 @@ const updateApplicationStatus =
       } = req.body;
 
 
-      // -------------------------------------------------
+     
       // 1. Allowed Statuses
-      // -------------------------------------------------
+    
 
       const allowedStatuses = [
 
@@ -592,9 +591,9 @@ const updateApplicationStatus =
       }
 
 
-      // -------------------------------------------------
+   
       // 2. Verify Ownership + Get Email Information
-      // -------------------------------------------------
+     
 
       const [applications] =
         await pool.query(
@@ -654,9 +653,9 @@ const updateApplicationStatus =
         applications[0];
 
 
-      // -------------------------------------------------
+     
       // 3. Check if Status is Already the Same
-      // -------------------------------------------------
+      
 
       if (
         application.current_status ===
@@ -687,9 +686,9 @@ const updateApplicationStatus =
       }
 
 
-      // -------------------------------------------------
+      
       // 4. Update Status
-      // -------------------------------------------------
+ 
 
       await pool.query(
 
@@ -705,9 +704,9 @@ const updateApplicationStatus =
       );
 
 
-      // -------------------------------------------------
+
       // 5. Send Status Update Email
-      // -------------------------------------------------
+    
 
       sendApplicationStatusEmail(
 
@@ -733,9 +732,9 @@ const updateApplicationStatus =
       );
 
 
-      // -------------------------------------------------
+
       // 6. Response
-      // -------------------------------------------------
+   
 
       return res.status(200).json({
 
@@ -782,9 +781,9 @@ const updateApplicationStatus =
   };
 
 
-// =====================================================
+
 // EXPORTS
-// =====================================================
+
 
 module.exports = {
 
