@@ -28,9 +28,9 @@ function CandidateDashboard() {
     useState("");
 
 
-  // =====================================
+
   // FETCH DASHBOARD DATA
-  // =====================================
+ 
 
   useEffect(() => {
 
@@ -86,9 +86,9 @@ function CandidateDashboard() {
   }, []);
 
 
-  // =====================================
+
   // LOADING
-  // =====================================
+
 
   if (loading) {
 
@@ -109,9 +109,9 @@ function CandidateDashboard() {
   }
 
 
-  // =====================================
+
   // ERROR
-  // =====================================
+
 
   if (error) {
 
@@ -140,9 +140,9 @@ function CandidateDashboard() {
     dashboardData?.recentApplications || [];
 
 
-  // =====================================
+
   // DASHBOARD
-  // =====================================
+ 
 
   return (
 

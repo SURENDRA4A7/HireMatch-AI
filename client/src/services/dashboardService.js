@@ -1,9 +1,9 @@
 import api from "./api";
 
 
-// =====================================
+
 // CANDIDATE DASHBOARD
-// =====================================
+
 
 export const getCandidateDashboard = async () => {
 
@@ -16,9 +16,8 @@ export const getCandidateDashboard = async () => {
 };
 
 
-// =====================================
 // EMPLOYER DASHBOARD
-// =====================================
+
 
 export const getEmployerDashboard = async () => {
 

@@ -41,9 +41,9 @@ function EmployerDashboard() {
   ] = useState("");
 
 
-  // =====================================
+  
   // FETCH EMPLOYER DASHBOARD
-  // =====================================
+  
 
   useEffect(() => {
 
@@ -99,9 +99,9 @@ function EmployerDashboard() {
   }, []);
 
 
-  // =====================================
+  
   // LOADING STATE
-  // =====================================
+
 
   if (loading) {
 
@@ -122,9 +122,9 @@ function EmployerDashboard() {
   }
 
 
-  // =====================================
+ 
   // ERROR STATE
-  // =====================================
+ 
 
   if (error) {
 
@@ -179,9 +179,7 @@ function EmployerDashboard() {
       <div className="employer-dashboard">
 
 
-        {/* =====================================
-            DASHBOARD HEADER
-        ===================================== */}
+        {/* DASHBOARD HEADER */}
 
         <div className="employer-dashboard-header">
 
@@ -219,9 +217,7 @@ function EmployerDashboard() {
         </div>
 
 
-        {/* =====================================
-            STATISTICS CARDS
-        ===================================== */}
+        {/* STATISTICS CARDS */}
 
         <div className="employer-stats-grid">
 
@@ -334,9 +330,7 @@ function EmployerDashboard() {
         </div>
 
 
-        {/* =====================================
-            QUICK ACTIONS
-        ===================================== */}
+        {/* QUICK ACTIONS*/}
 
         <div className="employer-dashboard-section">
 
@@ -440,9 +434,7 @@ function EmployerDashboard() {
         </div>
 
 
-        {/* =====================================
-            RECENT JOBS
-        ===================================== */}
+        {/* RECENT JOBS */}
 
         <div className="employer-dashboard-section">
 
@@ -565,9 +557,7 @@ function EmployerDashboard() {
         </div>
 
 
-        {/* =====================================
-            RECENT APPLICATIONS
-        ===================================== */}
+        {/* RECENT APPLICATIONS*/}
 
         <div className="employer-dashboard-section">
 

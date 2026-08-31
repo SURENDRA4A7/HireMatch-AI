@@ -1,9 +1,7 @@
 import api from "./api";
 
 
-// =====================================
 // APPLY FOR JOB
-// =====================================
 
 export const applyForJob = async (
   jobId,
@@ -21,9 +19,9 @@ export const applyForJob = async (
 };
 
 
-// =====================================
+
 // CANDIDATE MY APPLICATIONS
-// =====================================
+
 
 export const getMyApplications =
   async () => {
@@ -38,9 +36,9 @@ export const getMyApplications =
   };
 
 
-// =====================================
+
 // EMPLOYER APPLICATIONS
-// =====================================
+
 
 export const getEmployerApplications =
   async () => {
@@ -55,9 +53,9 @@ export const getEmployerApplications =
   };
 
 
-// =====================================
+
 // UPDATE APPLICATION STATUS
-// =====================================
+
 
 export const updateApplicationStatus =
   async (

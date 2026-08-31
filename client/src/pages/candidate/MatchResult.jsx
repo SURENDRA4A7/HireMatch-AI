@@ -37,9 +37,9 @@ function MatchResult() {
     useState(false);
 
 
-  // =====================================
+
   // FETCH JOB MATCH RESULT
-  // =====================================
+ 
 
   useEffect(() => {
     const fetchMatchResult = async () => {
@@ -80,9 +80,8 @@ function MatchResult() {
   }, [jobId]);
 
 
-  // =====================================
   // APPLY FOR JOB
-  // =====================================
+ 
 
   const handleApply = async () => {
     try {
@@ -144,9 +143,9 @@ function MatchResult() {
   };
 
 
-  // =====================================
+
   // LOADING
-  // =====================================
+ 
 
   if (loading) {
     return (
@@ -161,9 +160,8 @@ function MatchResult() {
   }
 
 
-  // =====================================
   // MATCH ERROR
-  // =====================================
+ 
 
   if (matchError) {
     return (
@@ -194,9 +192,9 @@ function MatchResult() {
   }
 
 
-  // =====================================
+  
   // MATCH RESULT
-  // =====================================
+ 
 
   return (
     <div className="page-container">

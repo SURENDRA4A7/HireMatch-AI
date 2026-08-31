@@ -69,9 +69,9 @@ function CreateJob() {
   };
 
 
-  // =====================================
+  
   // CREATE JOB
-  // =====================================
+  
 
   const handleSubmit = async (
     event
@@ -152,9 +152,7 @@ function CreateJob() {
       <div className="create-job-page">
 
 
-        {/* =====================================
-            HEADER
-        ===================================== */}
+        {/* HEADER */}
 
         <div className="create-job-header">
 
@@ -176,9 +174,7 @@ function CreateJob() {
         </div>
 
 
-        {/* =====================================
-            FORM
-        ===================================== */}
+        {/* FORM */}
 
         <div className="create-job-card">
 

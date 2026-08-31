@@ -20,7 +20,7 @@ function ResumeUpload() {
       return;
     }
 
-    // Allow only PDF files
+    // Allows only PDF files
     if (file.type !== "application/pdf") {
       setError("Please select a PDF resume.");
 

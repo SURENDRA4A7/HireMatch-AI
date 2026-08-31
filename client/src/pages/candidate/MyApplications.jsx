@@ -19,9 +19,9 @@ function MyApplications() {
     useState("");
 
 
-  // =====================================
+  
   // FETCH APPLICATIONS
-  // =====================================
+  
 
   useEffect(() => {
 
@@ -90,9 +90,9 @@ function MyApplications() {
   }, []);
 
 
-  // =====================================
+
   // FORMAT DATE
-  // =====================================
+ 
 
   const formatDate =
     (date) => {
@@ -118,9 +118,9 @@ function MyApplications() {
     };
 
 
-  // =====================================
+  
   // FORMAT STATUS
-  // =====================================
+ 
 
   const formatStatus =
     (status) => {
@@ -144,9 +144,9 @@ function MyApplications() {
     };
 
 
-  // =====================================
+  
   // LOADING
-  // =====================================
+
 
   if (loading) {
 
@@ -171,9 +171,9 @@ function MyApplications() {
   }
 
 
-  // =====================================
+ 
   // ERROR
-  // =====================================
+ 
 
   if (error) {
 
@@ -223,9 +223,7 @@ function MyApplications() {
       <div className="my-applications-page">
 
 
-        {/* =================================
-            HEADER
-        ================================= */}
+        {/* HEADER */}
 
         <div className="my-applications-hero">
 
@@ -330,9 +328,7 @@ function MyApplications() {
         </div>
 
 
-        {/* =================================
-            EMPTY STATE
-        ================================= */}
+        {/* EMPTY STATE */}
 
         {applications.length === 0 ? (
 
@@ -371,9 +367,7 @@ function MyApplications() {
 
           <>
 
-            {/* =============================
-                SECTION HEADER
-            ============================== */}
+            {/* SECTION HEADER */}
 
             <div className="applications-section-heading">
 
@@ -403,9 +397,7 @@ function MyApplications() {
             </div>
 
 
-            {/* =============================
-                APPLICATION LIST
-            ============================== */}
+            {/* APPLICATION LIST*/}
 
             <div className="professional-applications-list">
 
@@ -431,9 +423,7 @@ function MyApplications() {
                     >
 
 
-                      {/* =====================
-                          TOP SECTION
-                      ====================== */}
+                      {/* TOP SECTION */}
 
                       <div className="application-card-top">
 
@@ -618,9 +608,7 @@ function MyApplications() {
                       </div>
 
 
-                      {/* =====================
-                          FOOTER
-                      ====================== */}
+                      {/* FOOTER */}
 
                       <div className="professional-application-footer">
 

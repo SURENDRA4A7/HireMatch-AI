@@ -33,9 +33,9 @@ function EmployerApplications() {
     useState(null);
 
 
-  // =====================================
+ 
   // FETCH APPLICATIONS
-  // =====================================
+  
 
   useEffect(() => {
 
@@ -110,9 +110,9 @@ function EmployerApplications() {
   }, [jobId]);
 
 
-  // =====================================
+ 
   // UPDATE APPLICATION STATUS
-  // =====================================
+
 
   const handleStatusChange =
     async (
@@ -186,9 +186,9 @@ function EmployerApplications() {
     };
 
 
-  // =====================================
+
   // LOADING
-  // =====================================
+ 
 
   if (loading) {
 
@@ -209,9 +209,9 @@ function EmployerApplications() {
   }
 
 
-  // =====================================
+ 
   // PAGE
-  // =====================================
+ 
 
   return (
 

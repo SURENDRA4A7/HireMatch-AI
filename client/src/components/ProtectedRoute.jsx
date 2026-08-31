@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 function ProtectedRoute({ children, allowedRoles }) {
 const { user, loading, isAuthenticated } = useAuth();
 
-// Wait until localStorage user data is loaded
+//  user data is loading
 if (loading) {
 return <div>Loading...</div>;
 }

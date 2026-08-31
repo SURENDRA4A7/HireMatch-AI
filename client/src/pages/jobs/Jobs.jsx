@@ -24,9 +24,7 @@ function Jobs() {
 
       const data = await getJobs();
 
-      // Supports either:
-      // [ ...jobs ]
-      // OR { jobs: [ ...jobs ] }
+    
 
       const jobsData = Array.isArray(data)
         ? data

@@ -33,9 +33,9 @@ function MyJobs() {
     useState(null);
 
 
-  // =====================================
+
   // FETCH EMPLOYER JOBS
-  // =====================================
+  
 
   const fetchMyJobs =
     async () => {
@@ -101,9 +101,9 @@ function MyJobs() {
   }, []);
 
 
-  // =====================================
+  
   // VIEW APPLICATIONS
-  // =====================================
+
 
   const handleViewApplications =
     (jobId) => {
@@ -204,9 +204,9 @@ function MyJobs() {
     };
 
 
-  // =====================================
+  
   // FORMAT REQUIRED SKILLS
-  // =====================================
+  
 
   const getSkills =
     (requiredSkills) => {
@@ -244,9 +244,8 @@ function MyJobs() {
     };
 
 
-  // =====================================
   // LOADING
-  // =====================================
+
 
   if (loading) {
 
@@ -267,9 +266,8 @@ function MyJobs() {
   }
 
 
-  // =====================================
   // PAGE
-  // =====================================
+ 
 
   return (
 
@@ -278,9 +276,7 @@ function MyJobs() {
       <div className="my-jobs-container">
 
 
-        {/* ================================
-            HEADER
-        ================================= */}
+        {/* HEADER*/}
 
         <div className="my-jobs-header">
 
@@ -309,9 +305,7 @@ function MyJobs() {
         </div>
 
 
-        {/* ================================
-            ERROR MESSAGE
-        ================================= */}
+        {/*  ERROR MESSAGE */}
 
         {error && (
 
@@ -324,9 +318,7 @@ function MyJobs() {
         )}
 
 
-        {/* ================================
-            EMPTY STATE
-        ================================= */}
+        {/* EMPTY STATE */}
 
         {jobs.length === 0 ? (
 
@@ -374,9 +366,7 @@ function MyJobs() {
                   >
 
 
-                    {/* ======================
-                        JOB INFORMATION
-                    ====================== */}
+                    {/* JOB INFORMATION */}
 
                     <div className="employer-job-info">
 
@@ -491,18 +481,14 @@ function MyJobs() {
                     </div>
 
 
-                    {/* ======================
-                        ACTION BUTTONS
-                    ====================== */}
+                    {/* ACTION BUTTONS */}
 
                     <div
                       className="job-card-actions"
                     >
 
 
-                      {/* ==================
-                          VIEW APPLICATIONS
-                      ================== */}
+                      {/* VIEW APPLICATIONS */}
 
                       <button
                         type="button"
@@ -524,9 +510,7 @@ function MyJobs() {
                       </button>
 
 
-                      {/* ==================
-                          EDIT JOB
-                      ================== */}
+                      {/* EDIT JOB */}
 
                       <button
                         type="button"
@@ -544,9 +528,7 @@ function MyJobs() {
                       </button>
 
 
-                      {/* ==================
-                          DELETE JOB
-                      ================== */}
+                      {/*  DELETE JOB */}
 
                       <button
                         type="button"

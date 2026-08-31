@@ -1,9 +1,9 @@
 import api from "./api";
 
 
-// =====================================
+
 // GET ALL JOBS
-// =====================================
+
 
 export const getJobs =
   async (filters = {}) => {
@@ -21,9 +21,9 @@ export const getJobs =
   };
 
 
-// =====================================
+
 // GET EMPLOYER JOBS
-// =====================================
+
 
 export const getMyJobs =
   async () => {
@@ -38,9 +38,9 @@ export const getMyJobs =
   };
 
 
-// =====================================
+
 // GET JOB BY ID
-// =====================================
+
 
 export const getJobById =
   async (id) => {
@@ -55,9 +55,9 @@ export const getJobById =
   };
 
 
-// =====================================
+
 // CREATE JOB
-// =====================================
+
 
 export const createJob =
   async (jobData) => {
@@ -73,9 +73,9 @@ export const createJob =
   };
 
 
-// =====================================
+
 // UPDATE JOB
-// =====================================
+
 
 export const updateJob =
   async (
@@ -94,9 +94,9 @@ export const updateJob =
   };
 
 
-// =====================================
+
 // DELETE JOB
-// =====================================
+
 
 export const deleteJob =
   async (id) => {
